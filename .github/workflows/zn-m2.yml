@@ -20,7 +20,7 @@ permissions:
   actions: write
 
 env:
-  REPO_URL: https://github.com/openwrt-fork/sdf8057-ipq6000.git
+  REPO_URL: https://github.com/n3o4po11o/sdf8057-ipq6000.git
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ./config/zn-m2.config
@@ -36,13 +36,13 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    
+
     - name: Apt Update
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo apt-get update
-        
+
     - name: Free Disk Space
       uses: jlumbroso/free-disk-space@main
       with:
@@ -181,9 +181,9 @@ jobs:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
         files: |
-         ${{ env.FIRMWARE }}/*.ubi
-         ${{ env.FIRMWARE }}/*.bin
-         ${{ env.FIRMWARE }}/*.manifest
+          ${{ env.FIRMWARE }}/*.ubi
+          ${{ env.FIRMWARE }}/*.bin
+          ${{ env.FIRMWARE }}/*.manifest
 
     - name: Delete releases and workflows runs
       uses: ophub/delete-releases-workflows@main

@@ -28,6 +28,17 @@ find ./ -name Makefile | grep -E 'mosdns|v2ray-geodata' | xargs -r rm -f
 git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
+# 应用自定义内核配置（来源：make kernel_menuconfig 生成）
+# 远程执行 make kernel_menuconfig 后，变更会写回 target/linux/ipq60xx/config-4.4；
+# 将其保存到本仓库 config/zn-m2.kernel-config，构建时覆盖回源码树。
+_ZN_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+_ZN_PROJECT_ROOT="$(cd "$_ZN_SCRIPT_DIR/../.." && pwd)"
+if [[ -f "$_ZN_PROJECT_ROOT/config/zn-m2.kernel-config" ]]; then
+    cp -f "$_ZN_PROJECT_ROOT/config/zn-m2.kernel-config" target/linux/ipq60xx/config-4.4
+else
+    echo "[diy-part3] 未找到 config/zn-m2.kernel-config，跳过内核配置覆盖"
+fi
+
 # ttyd免登陆
 sed -i -r 's#/bin/login#/bin/login -f root#g' feeds/packages/utils/ttyd/files/ttyd.config
 

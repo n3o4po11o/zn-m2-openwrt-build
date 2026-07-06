@@ -83,7 +83,7 @@ init_environment() {
 
     # 使用 immortalwrt 官方脚本安装编译主依赖（与 CI 完全一致）
     info "拉取并执行 immortalwrt init_build_environment.sh ..."
-    curl -s "$INIT_BUILD_ENV_URL" | sudo bash
+    #curl -s "$INIT_BUILD_ENV_URL" | sudo bash
 
     # workflow 中额外指定的依赖
     sudo apt-get install -y rename pigz libfuse-dev upx subversion clang lua5.1 liblua5.1-0-dev
